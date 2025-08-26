@@ -1,6 +1,8 @@
 -- Fix Lag cho game PlaceId 137925884276740
 
 -- Danh sách model cần ẩn
+-- Fix Lag: Ẩn model trong game 137925884276740
+
 local modelNames = {
     "ActiveObjects", "SpawnedSections", "AirBalloonSegment", "AirBalloonSegment2",
     "CannonSegment2", "Wall", "Cannon", "Wheels", "Wheel",
@@ -33,8 +35,8 @@ local modelNames = {
     "BlockAssets", "Driver Seat", "Wing", "Block", "Fuel"
 }
 
--- Hàm ẩn model
 local function hideModel(model)
+    if not model then return end
     for _, obj in pairs(model:GetDescendants()) do
         if obj:IsA("BasePart") then
             obj.Transparency = 1
@@ -45,15 +47,14 @@ local function hideModel(model)
     end
 end
 
--- Quét toàn Workspace + ReplicatedStorage
 local function hideAll()
     for _, name in ipairs(modelNames) do
         local m1 = game.Workspace:FindFirstChild(name)
         local m2 = game.ReplicatedStorage:FindFirstChild(name)
-        if m1 then hideModel(m1) end
-        if m2 then hideModel(m2) end
+        hideModel(m1)
+        hideModel(m2)
     end
 end
 
 hideAll()
-print("✅ Đã ẩn toàn bộ model trong game 137925884276740")
+    
